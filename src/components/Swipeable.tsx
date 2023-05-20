@@ -133,6 +133,16 @@ export interface SwipeableProps
     swipeable: Swipeable
   ) => void;
 
+
+  // onSwipeableClose?: () => void;
+  // onSwipeableClose?: (x: Animated.AnimatedInterpolation) => void;
+  onSwipeableClose_arefin?: (
+      direction: 'left' | 'right',
+      x: Animated.AnimatedInterpolation<number>) => void;
+
+
+
+
   /**
    * @deprecated Use `direction` argument of onSwipeableWillOpen()
    *
@@ -407,7 +417,12 @@ export default class Swipeable extends Component<
           this.props.onSwipeableOpen?.('right', this);
         } else {
           const closingDirection = fromValue > 0 ? 'left' : 'right';
-          this.props.onSwipeableClose?.(closingDirection, this);
+          //this.props.onSwipeableClose?.(closingDirection, this);
+          // this.props.onSwipeableClose?.();
+
+          // Changes were made to know how much swipe occurred and invoke action based on swipe distance.
+          this.props.onSwipeableClose_arefin?.(closingDirection,this.state.rowTranslation);
+          
         }
       }
     });
